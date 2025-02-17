@@ -54,6 +54,12 @@ function addfuncButton() {
   return arrButton;
 }
 
+function appendArrToContainer(arr, container) {
+  arr.forEach(function (item) {
+    container.appendChild(item);
+  });
+}
+
 function generateButton() {
   const numberContainer = document.querySelector(".number-container");
   const operatorContainer = document.querySelector(".operator-container");
@@ -66,12 +72,6 @@ function generateButton() {
   appendArrToContainer(arrNumButton, numberContainer);
   appendArrToContainer(arrOperatorButton, operatorContainer);
   appendArrToContainer(arrFuncButton, functionContainer);
-}
-
-function appendArrToContainer(arr, container) {
-  arr.forEach(function (item) {
-    container.appendChild(item);
-  });
 }
 
 generateButton();
