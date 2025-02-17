@@ -16,7 +16,15 @@ function addNumberButton() {
     button.setAttribute("id", `button${i}`);
     button.classList.add("numButton");
     arrButton.push(button);
+    if (i === 1) {
+      const button = document.createElement("button");
+      button.innerText = `.`;
+      button.setAttribute("id", `titik`);
+      button.classList.add("numButton");
+      arrButton.push(button);
+    }
   }
+
   return arrButton;
 }
 function addOperatorButton() {
