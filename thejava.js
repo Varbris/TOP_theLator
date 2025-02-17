@@ -9,33 +9,16 @@ function divide(num) {}
 function operate(operator, num1, num2) {}
 
 function addNumberButton() {
-  let arrButton = [];
-  for (let i = 9; i >= 0; i--) {
-    const button = document.createElement("button");
-    button.innerText = `${i}`;
-    button.setAttribute("id", `button${i}`);
-    button.classList.add("numButton");
-    button.addEventListener("click", function (event) {
-      event.target.style.backgroundColor = "#faf788";
-      setTimeout(function () {
-        event.target.style.backgroundColor = "";
-      }, 100);
-    });
-    arrButton.push(button);
-    if (i === 1) {
-      const button = document.createElement("button");
-      button.innerText = `.`;
-      button.setAttribute("id", `buttondot`);
-      button.classList.add("numButton");
-      button.addEventListener("click", function (event) {
-        event.target.style.backgroundColor = "#faf788";
-        setTimeout(function () {
-          event.target.style.backgroundColor = "";
-        }, 100);
-      });
-      arrButton.push(button);
-    }
-  }
+  const arrNumberButton = Array(10)
+    .fill()
+    .map(function (item, index) {
+      return index;
+    })
+    .reverse();
+  arrNumberButton.splice(9, 0, ".");
+  console.log(arrNumberButton);
+
+  const arrButton = arrToDomButton(arrNumberButton, "numButton");
 
   return arrButton;
 }
