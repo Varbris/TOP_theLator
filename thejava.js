@@ -19,7 +19,7 @@ function addNumberButton() {
     if (i === 1) {
       const button = document.createElement("button");
       button.innerText = `.`;
-      button.setAttribute("id", `titik`);
+      button.setAttribute("id", `buttondot`);
       button.classList.add("numButton");
       arrButton.push(button);
     }
@@ -27,29 +27,50 @@ function addNumberButton() {
 
   return arrButton;
 }
+
+function arrToDomButton(arr, styleName) {
+  let arrButton = [];
+  arrButton = arr.map(function (item) {
+    const button = document.createElement("button");
+    button.innerText = `${item}`;
+    button.setAttribute("id", `button${item}`);
+    button.classList.add(`${styleName}`);
+    return button;
+  });
+  return arrButton;
+}
+
 function addOperatorButton() {
   const arrOperator = ["/", "*", "-", "+", "="];
-  let arrButton = [];
-  for (let i = 0; i < arrOperator.length; i++) {
-    const button = document.createElement("button");
-    button.innerText = `${arrOperator[i]}`;
-    button.setAttribute("id", `button${arrOperator[i]}`);
-    button.classList.add("operatorButton");
-    arrButton.push(button);
-  }
+  let arrButton = arrToDomButton(arrOperator, "operatorButton");
+
+  return arrButton;
+}
+
+function addfuncButton() {
+  const arrFunc = ["C", "M-", "M+"];
+  let arrButton = arrToDomButton(arrFunc, "functionButton");
+
   return arrButton;
 }
 
 function generateButton() {
   const numberContainer = document.querySelector(".number-container");
   const operatorContainer = document.querySelector(".operator-container");
+  const functionContainer = document.querySelector(".function-container");
+
   const arrNumButton = addNumberButton();
   const arrOperatorButton = addOperatorButton();
-  arrNumButton.forEach(function (item) {
-    numberContainer.appendChild(item);
-  });
-  arrOperatorButton.forEach(function (item) {
-    operatorContainer.appendChild(item);
+  const arrFuncButton = addfuncButton();
+
+  appendArrToContainer(arrNumButton, numberContainer);
+  appendArrToContainer(arrOperatorButton, operatorContainer);
+  appendArrToContainer(arrFuncButton, functionContainer);
+}
+
+function appendArrToContainer(arr, container) {
+  arr.forEach(function (item) {
+    container.appendChild(item);
   });
 }
 
