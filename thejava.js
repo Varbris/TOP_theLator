@@ -15,12 +15,24 @@ function addNumberButton() {
     button.innerText = `${i}`;
     button.setAttribute("id", `button${i}`);
     button.classList.add("numButton");
+    button.addEventListener("click", function (event) {
+      event.target.style.backgroundColor = "#faf788";
+      setTimeout(function () {
+        event.target.style.backgroundColor = "";
+      }, 100);
+    });
     arrButton.push(button);
     if (i === 1) {
       const button = document.createElement("button");
       button.innerText = `.`;
       button.setAttribute("id", `buttondot`);
       button.classList.add("numButton");
+      button.addEventListener("click", function (event) {
+        event.target.style.backgroundColor = "#faf788";
+        setTimeout(function () {
+          event.target.style.backgroundColor = "";
+        }, 100);
+      });
       arrButton.push(button);
     }
   }
@@ -35,13 +47,20 @@ function arrToDomButton(arr, styleName) {
     button.innerText = `${item}`;
     button.setAttribute("id", `button${item}`);
     button.classList.add(`${styleName}`);
+
+    button.addEventListener("click", function (event) {
+      event.target.style.backgroundColor = "#faf788";
+      setTimeout(function () {
+        event.target.style.backgroundColor = "";
+      }, 100);
+    });
     return button;
   });
   return arrButton;
 }
 
 function addOperatorButton() {
-  const arrOperator = ["/", "*", "-", "+", "="];
+  const arrOperator = ["/", "%", "*", "-", "+", "="];
   let arrButton = arrToDomButton(arrOperator, "operatorButton");
 
   return arrButton;
