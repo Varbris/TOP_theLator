@@ -80,3 +80,7 @@ button {
   border-radius: 5px;
   border: 3px solid black;
 }
+
+button:active {
+  background-color: #faf788;
+}

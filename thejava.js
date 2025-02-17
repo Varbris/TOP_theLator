@@ -16,7 +16,6 @@ function addNumberButton() {
     })
     .reverse();
   arrNumberButton.splice(9, 0, ".");
-  console.log(arrNumberButton);
 
   const arrButton = arrToDomButton(arrNumberButton, "numButton");
 
@@ -29,14 +28,9 @@ function arrToDomButton(arr, styleName) {
     const button = document.createElement("button");
     button.innerText = `${item}`;
     button.setAttribute("id", `button${item}`);
+    button.setAttribute("value", item);
     button.classList.add(`${styleName}`);
 
-    button.addEventListener("click", function (event) {
-      event.target.style.backgroundColor = "#faf788";
-      setTimeout(function () {
-        event.target.style.backgroundColor = "";
-      }, 100);
-    });
     return button;
   });
   return arrButton;
@@ -62,7 +56,7 @@ function appendArrToContainer(arr, container) {
   });
 }
 
-function generateButton() {
+function generateCalculator() {
   const numberContainer = document.querySelector(".number-container");
   const operatorContainer = document.querySelector(".operator-container");
   const functionContainer = document.querySelector(".function-container");
@@ -76,4 +70,21 @@ function generateButton() {
   appendArrToContainer(arrFuncButton, functionContainer);
 }
 
-generateButton();
+document.addEventListener("DOMContentLoaded", function (event) {
+  generateCalculator();
+
+  const numberContainer = document.querySelector(".number-container");
+  const displayContainer = document.querySelector(".display-container");
+
+  const arrNumberButton = numberContainer.querySelectorAll("button");
+  arrNumberButton.forEach(function (number) {
+    number.addEventListener("click", function (event) {
+      let oldValue = parseInt(displayContainer.innerText);
+      if (oldValue === 0) {
+        displayContainer.innerText = oldValue + parseInt(event.target.value);
+      } else {
+        displayContainer.innerText += event.target.value;
+      }
+    });
+  });
+});
