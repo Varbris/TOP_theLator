@@ -74,16 +74,50 @@ document.addEventListener("DOMContentLoaded", function (event) {
   generateCalculator();
 
   const numberContainer = document.querySelector(".number-container");
+  const operatorContainer = document.querySelector(".operator-container");
   const displayContainer = document.querySelector(".display-container");
 
+  const maxInteger = Number.MAX_SAFE_INTEGER / 100000000;
   const arrNumberButton = numberContainer.querySelectorAll("button");
   arrNumberButton.forEach(function (number) {
     number.addEventListener("click", function (event) {
-      let oldValue = parseInt(displayContainer.innerText);
-      if (oldValue === 0) {
-        displayContainer.innerText = oldValue + parseInt(event.target.value);
-      } else {
+      let initialValue = parseInt(displayContainer.innerText);
+      if (initialValue === 0) {
+        displayContainer.innerText =
+          initialValue + parseInt(event.target.value);
+      } else if (parseInt(displayContainer.innerText) < maxInteger) {
         displayContainer.innerText += event.target.value;
+      }
+    });
+  });
+
+  const arrValue = new Array(1);
+  const arrOperatorButton = operatorContainer.querySelectorAll("button");
+  arrOperatorButton.forEach(function (operator) {
+    operator.addEventListener("click", function (event) {
+      switch (event.target.value) {
+        case "/":
+          console.log("awikwok");
+          break;
+        case "%":
+          console.log("awikwok");
+          break;
+        case "*":
+          console.log("awikwok");
+          break;
+        case "-":
+          console.log("awikwok");
+          break;
+        case "+":
+          arrValue.push(displayContainer.innerText);
+          displayContainer.innerText = "";
+          console.log(arrValue);
+          break;
+        case "=":
+          console.log("awikwok");
+          break;
+        default:
+          break;
       }
     });
   });
