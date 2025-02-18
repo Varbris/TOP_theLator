@@ -22,6 +22,8 @@
   background-color: rgb(161, 193, 253);
   padding: 50px;
   margin-bottom: 5px;
+  font-size: 80px;
+  text-align: right;
 }
 
 .button-body {

@@ -70,54 +70,55 @@ function generateCalculator() {
   appendArrToContainer(arrFuncButton, functionContainer);
 }
 
-document.addEventListener("DOMContentLoaded", function (event) {
+function toDisplayNumber(event) {
+  const maxInteger = Number.MAX_SAFE_INTEGER / 100000000;
+  const displayContainer = document.querySelector(".display-container");
+
+  if (displayContainer.innerText === "0") {
+    displayContainer.innerText =
+      parseInt(displayContainer.innerText) + parseInt(event.target.value);
+  } else if (displayContainer.innerText === "") {
+    displayContainer.innerText += event.target.value;
+  } else if (parseInt(displayContainer.innerText) < maxInteger) {
+    displayContainer.innerText += event.target.value;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", function () {
   generateCalculator();
 
   const numberContainer = document.querySelector(".number-container");
   const operatorContainer = document.querySelector(".operator-container");
   const displayContainer = document.querySelector(".display-container");
+  let isOperatorButtonClicked = false;
+  let value1 = null;
+  let value2 = null;
 
-  const maxInteger = Number.MAX_SAFE_INTEGER / 100000000;
   const arrNumberButton = numberContainer.querySelectorAll("button");
+  const arrOperatorButton = operatorContainer.querySelectorAll("button");
+
   arrNumberButton.forEach(function (number) {
     number.addEventListener("click", function (event) {
-      let initialValue = parseInt(displayContainer.innerText);
-      if (initialValue === 0) {
-        displayContainer.innerText =
-          initialValue + parseInt(event.target.value);
-      } else if (parseInt(displayContainer.innerText) < maxInteger) {
-        displayContainer.innerText += event.target.value;
+      if (!isOperatorButtonClicked) {
+        toDisplayNumber(event);
+      } else {
+        displayContainer.innerText = "";
+        toDisplayNumber(event);
+        isOperatorButtonClicked = false;
       }
     });
   });
 
-  const arrValue = new Array(1);
-  const arrOperatorButton = operatorContainer.querySelectorAll("button");
   arrOperatorButton.forEach(function (operator) {
     operator.addEventListener("click", function (event) {
-      switch (event.target.value) {
-        case "/":
-          console.log("awikwok");
-          break;
-        case "%":
-          console.log("awikwok");
-          break;
-        case "*":
-          console.log("awikwok");
-          break;
-        case "-":
-          console.log("awikwok");
-          break;
-        case "+":
-          arrValue.push(displayContainer.innerText);
-          displayContainer.innerText = "";
-          console.log(arrValue);
-          break;
-        case "=":
-          console.log("awikwok");
-          break;
-        default:
-          break;
+      if (value1 === null) {
+        value1 = displayContainer.innerText;
+        isOperatorButtonClicked = true;
+        console.log("awikwok1 : " + value1);
+      } else {
+        value2 = displayContainer.innerText;
+        isOperatorButtonClicked = true;
+        console.log("awikwok2 : " + value2);
       }
     });
   });
