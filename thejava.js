@@ -33,9 +33,8 @@ function operate(operator, num1, num2) {
       result = add(num1, num2);
       break;
     case "=":
-      result = num1;
+      result = result;
       break;
-
     default:
       break;
   }
@@ -126,6 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const operatorContainer = document.querySelector(".operator-container");
   const displayContainer = document.querySelector(".display-container");
   let isOperatorButtonClicked = false;
+  let operatorChar = null;
   let value1 = null;
   let value2 = null;
 
@@ -134,26 +134,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   arrNumberButton.forEach(function (number) {
     number.addEventListener("click", function (event) {
-      if (!isOperatorButtonClicked) {
-        toDisplayNumber(event);
-      } else {
+      if (isOperatorButtonClicked) {
         displayContainer.innerText = "";
         toDisplayNumber(event);
+        value2 = displayContainer.innerText;
+        value1 = operate(operatorChar, value1, value2);
         isOperatorButtonClicked = false;
+      } else {
+        toDisplayNumber(event);
+        value1 = displayContainer.innerText;
       }
     });
   });
 
   arrOperatorButton.forEach(function (operator) {
     operator.addEventListener("click", function (event) {
-      if (value1 === null) {
-        value1 = displayContainer.innerText;
-        isOperatorButtonClicked = true;
+      isOperatorButtonClicked = true;
+      if (event.target.value !== "=") {
+        operatorChar = event.target.value;
+        displayContainer.innerText = value1;
       } else {
-        value2 = displayContainer.innerText;
-        isOperatorButtonClicked = true;
-        value1 = operate(event.target.value, value1, value2);
-        console.log(value1);
+        displayContainer.innerText = value1;
       }
     });
   });
