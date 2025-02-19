@@ -1,12 +1,47 @@
-function add(num) {}
+function add(num1, num2) {
+  return parseInt(num1) + parseInt(num2);
+}
 
-function subtract(num) {}
+function subtract(num1, num2) {
+  return parseInt(num1) - parseInt(num2);
+}
 
-function multiply(num) {}
+function multiply(num1, num2) {
+  return parseInt(num1) * parseInt(num2);
+}
 
-function divide(num) {}
+function divide(num1, num2) {
+  return parseInt(num1) / parseInt(num2);
+}
 
-function operate(operator, num1, num2) {}
+function operate(operator, num1, num2) {
+  let result = 0;
+  switch (operator) {
+    case "/":
+      result = divide(num1, num2);
+      break;
+    case "%":
+      result = add(num1, num2);
+      break;
+    case "*":
+      result = multiply(num1, num2);
+      break;
+    case "-":
+      result = subtract(num1, num2);
+      break;
+    case "+":
+      result = add(num1, num2);
+      break;
+    case "=":
+      result = num1;
+      break;
+
+    default:
+      break;
+  }
+
+  return result;
+}
 
 function addNumberButton() {
   const arrNumberButton = Array(10)
@@ -114,11 +149,11 @@ document.addEventListener("DOMContentLoaded", function () {
       if (value1 === null) {
         value1 = displayContainer.innerText;
         isOperatorButtonClicked = true;
-        console.log("awikwok1 : " + value1);
       } else {
         value2 = displayContainer.innerText;
         isOperatorButtonClicked = true;
-        console.log("awikwok2 : " + value2);
+        value1 = operate(event.target.value, value1, value2);
+        console.log(value1);
       }
     });
   });
