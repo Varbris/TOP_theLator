@@ -42,6 +42,28 @@ function operate(operator, num1, num2) {
   return result;
 }
 
+function operateFunction(funcButton, value1) {
+  switch (funcButton) {
+    case "C":
+      value1 = 0;
+
+      break;
+    case "M-":
+      value1 = -Math.abs(value1);
+      break;
+    case "M+":
+      value1 = Math.abs(value1);
+      break;
+    case ".":
+      value1 = parseFloat(value1) + ".";
+      break;
+
+    default:
+      break;
+  }
+  return value1;
+}
+
 function addNumberButton() {
   const arrNumberButton = Array(10)
     .fill()
@@ -49,7 +71,6 @@ function addNumberButton() {
       return index;
     })
     .reverse();
-  arrNumberButton.splice(9, 0, ".");
 
   const arrButton = arrToDomButton(arrNumberButton, "numButton");
 
@@ -78,7 +99,7 @@ function addOperatorButton() {
 }
 
 function addfuncButton() {
-  const arrFunc = ["C", "M-", "M+"];
+  const arrFunc = ["C", "M-", "M+", "."];
   let arrButton = arrToDomButton(arrFunc, "functionButton");
 
   return arrButton;
@@ -120,17 +141,26 @@ function toDisplayNumber(event) {
 
 document.addEventListener("DOMContentLoaded", function () {
   generateCalculator();
-
-  const numberContainer = document.querySelector(".number-container");
-  const operatorContainer = document.querySelector(".operator-container");
-  const displayContainer = document.querySelector(".display-container");
   let isOperatorButtonClicked = false;
   let operatorChar = null;
-  let value1 = null;
+  let value1 = 0;
   let value2 = null;
+  const numberContainer = document.querySelector(".number-container");
+  const operatorContainer = document.querySelector(".operator-container");
+  const functionContainer = document.querySelector(".function-container");
+  const displayContainer = document.querySelector(".display-container");
+  displayContainer.innerText = value1;
 
   const arrNumberButton = numberContainer.querySelectorAll("button");
   const arrOperatorButton = operatorContainer.querySelectorAll("button");
+  const functionButton = functionContainer.querySelectorAll("button");
+
+  functionButton.forEach(function (funcButton) {
+    funcButton.addEventListener("click", function (event) {
+      value1 = operateFunction(event.target.value, value1);
+      displayContainer.innerText = value1;
+    });
+  });
 
   arrNumberButton.forEach(function (number) {
     number.addEventListener("click", function (event) {
