@@ -42,26 +42,27 @@ function operate(operator, num1, num2) {
   return result;
 }
 
-function operateFunction(funcButton, value1) {
-  switch (funcButton) {
+function operateFunction(funcButton) {
+  const displayContainer = document.querySelector(".display-container");
+
+  switch (funcButton.target.value) {
     case "C":
-      value1 = 0;
+      displayContainer.innerText = 0;
 
       break;
     case "M-":
-      value1 = -Math.abs(value1);
+      displayContainer.innerText = -Math.abs(displayContainer.innerText);
       break;
     case "M+":
-      value1 = Math.abs(value1);
+      displayContainer.innerText = Math.abs(displayContainer.innerText);
       break;
     case ".":
-      value1 = parseFloat(value1) + ".";
+      displayContainer.innerText += ".";
       break;
 
     default:
       break;
   }
-  return value1;
 }
 
 function addNumberButton() {
@@ -157,8 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   functionButton.forEach(function (funcButton) {
     funcButton.addEventListener("click", function (event) {
-      value1 = operateFunction(event.target.value, value1);
-      displayContainer.innerText = value1;
+      operateFunction(event);
     });
   });
 
