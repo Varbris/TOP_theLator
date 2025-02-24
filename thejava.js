@@ -1,5 +1,5 @@
 function add(num1, num2) {
-  return parseInt(num1) + parseInt(num2);
+  return parseFloat(num1) + parseFloat(num2);
 }
 
 function subtract(num1, num2) {
@@ -16,9 +16,10 @@ function divide(num1, num2) {
 
 function operate(operator, num1, num2) {
   let result = 0;
+
   switch (operator) {
     case "/":
-      result = divide(num1, num2);
+      result = divide(num1);
       break;
     case "%":
       result = add(num1, num2);
@@ -31,9 +32,7 @@ function operate(operator, num1, num2) {
       break;
     case "+":
       result = add(num1, num2);
-      break;
-    case "=":
-      result = result;
+
       break;
     default:
       break;
@@ -132,10 +131,10 @@ function toDisplayNumber(event) {
 
   if (displayContainer.innerText === "0") {
     displayContainer.innerText =
-      parseInt(displayContainer.innerText) + parseInt(event.target.value);
+      parseFloat(displayContainer.innerText) + parseFloat(event.target.value);
   } else if (displayContainer.innerText === "") {
     displayContainer.innerText += event.target.value;
-  } else if (parseInt(displayContainer.innerText) < maxInteger) {
+  } else if (parseFloat(displayContainer.innerText) < maxInteger) {
     displayContainer.innerText += event.target.value;
   }
 }
@@ -143,49 +142,61 @@ function toDisplayNumber(event) {
 document.addEventListener("DOMContentLoaded", function () {
   generateCalculator();
   let isOperatorButtonClicked = false;
+  let isFuncButtonClicked = false;
   let operatorChar = null;
-  let value1 = 0;
-  let value2 = null;
+  let value1 = "";
+  let value2 = "";
+  let result = null;
   const numberContainer = document.querySelector(".number-container");
   const operatorContainer = document.querySelector(".operator-container");
   const functionContainer = document.querySelector(".function-container");
   const displayContainer = document.querySelector(".display-container");
-  displayContainer.innerText = value1;
+  displayContainer.innerText = 0;
+  const displayResult = document.createElement("p");
 
   const arrNumberButton = numberContainer.querySelectorAll("button");
   const arrOperatorButton = operatorContainer.querySelectorAll("button");
-  const functionButton = functionContainer.querySelectorAll("button");
+  const arrfunctionButton = functionContainer.querySelectorAll("button");
 
-  functionButton.forEach(function (funcButton) {
+  arrfunctionButton.forEach(function (funcButton) {
     funcButton.addEventListener("click", function (event) {
+      isFuncButtonClicked = true;
+      if (event.target.value === "C") {
+        operateFunction(event);
+        value1 = "";
+        value2 = "";
+        isOperatorButtonClicked = false;
+      }
       operateFunction(event);
+      value1 = displayContainer.innerText;
     });
   });
 
   arrNumberButton.forEach(function (number) {
     number.addEventListener("click", function (event) {
+      toDisplayNumber(event);
+
       if (isOperatorButtonClicked) {
-        displayContainer.innerText = "";
-        toDisplayNumber(event);
-        value2 = displayContainer.innerText;
-        value1 = operate(operatorChar, value1, value2);
-        isOperatorButtonClicked = false;
+        value2 += event.target.value;
       } else {
-        toDisplayNumber(event);
-        value1 = displayContainer.innerText;
+        value1 += event.target.value;
       }
+
+      result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
     });
   });
 
   arrOperatorButton.forEach(function (operator) {
     operator.addEventListener("click", function (event) {
+      operatorChar = event.target.value;
       isOperatorButtonClicked = true;
-      if (event.target.value !== "=") {
-        operatorChar = event.target.value;
-        displayContainer.innerText = value1;
-      } else {
-        displayContainer.innerText = value1;
+      displayContainer.innerText = "";
+      if (value2 === "") {
+        return 0;
       }
+      value1 = parseFloat(result);
+      value2 = "";
+      console.log(result);
     });
   });
 });
