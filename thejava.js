@@ -146,13 +146,12 @@ document.addEventListener("DOMContentLoaded", function () {
   let operatorChar = null;
   let value1 = "";
   let value2 = "";
-  let result = null;
+  let result = "";
   const numberContainer = document.querySelector(".number-container");
   const operatorContainer = document.querySelector(".operator-container");
   const functionContainer = document.querySelector(".function-container");
   const displayContainer = document.querySelector(".display-container");
   displayContainer.innerText = 0;
-  const displayResult = document.createElement("p");
 
   const arrNumberButton = numberContainer.querySelectorAll("button");
   const arrOperatorButton = operatorContainer.querySelectorAll("button");
@@ -178,6 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (isOperatorButtonClicked) {
         value2 += event.target.value;
+        displayContainer.innerText = value2;
       } else {
         value1 += event.target.value;
       }
@@ -190,12 +190,14 @@ document.addEventListener("DOMContentLoaded", function () {
     operator.addEventListener("click", function (event) {
       operatorChar = event.target.value;
       isOperatorButtonClicked = true;
-      displayContainer.innerText = "";
       if (value2 === "") {
+        result = "";
+        displayContainer.innerText = result;
         return 0;
       }
       value1 = parseFloat(result);
       value2 = "";
+      displayContainer.innerText = result;
       console.log(result);
     });
   });
