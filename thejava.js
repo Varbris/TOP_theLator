@@ -1,17 +1,17 @@
 function add(num1, num2) {
-  return parseFloat(num1) + parseFloat(num2);
+  return num1 + num2;
 }
 
 function subtract(num1, num2) {
-  return parseInt(num1) - parseInt(num2);
+  return num1 - num2;
 }
 
 function multiply(num1, num2) {
-  return parseInt(num1) * parseInt(num2);
+  return num1 * num2;
 }
 
 function divide(num1, num2) {
-  return parseInt(num1) / parseInt(num2);
+  return num1 / num2;
 }
 
 function operate(operator, num1, num2) {
@@ -142,11 +142,12 @@ function toDisplayNumber(event) {
 document.addEventListener("DOMContentLoaded", function () {
   generateCalculator();
   let isOperatorButtonClicked = false;
-  let isFuncButtonClicked = false;
+  let isDecimalClicked = false;
   let operatorChar = null;
   let value1 = "";
   let value2 = "";
   let result = "";
+
   const numberContainer = document.querySelector(".number-container");
   const operatorContainer = document.querySelector(".operator-container");
   const functionContainer = document.querySelector(".function-container");
@@ -164,10 +165,23 @@ document.addEventListener("DOMContentLoaded", function () {
         operateFunction(event);
         value1 = "";
         value2 = "";
-        isOperatorButtonClicked = false;
       }
-      operateFunction(event);
-      value1 = displayContainer.innerText;
+      if (isDecimalClicked === false && isOperatorButtonClicked === false) {
+        operateFunction(event);
+        value1 = value1 === "" ? 0 + "." : value1 + ".";
+        isDecimalClicked = true;
+      } else if (
+        isDecimalClicked === false &&
+        isOperatorButtonClicked === true
+      ) {
+        operateFunction(event);
+        value2 += ".";
+        isDecimalClicked = true;
+      } else if (event.target.value !== ".") {
+        operateFunction(event);
+      }
+
+      console.log(isDecimalClicked);
     });
   });
 
@@ -182,6 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
         value1 += event.target.value;
       }
 
+      console.log(value1, value2, result);
       result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
     });
   });
@@ -192,13 +207,14 @@ document.addEventListener("DOMContentLoaded", function () {
       isOperatorButtonClicked = true;
       if (value2 === "") {
         result = "";
+        isDecimalClicked = false;
         displayContainer.innerText = result;
         return 0;
       }
       value1 = parseFloat(result);
       value2 = "";
-      displayContainer.innerText = result;
-      console.log(result);
+
+      displayContainer.innerText = Math.round(result * 100) / 100;
     });
   });
 });
