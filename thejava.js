@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
         isOperatorButtonClicked === false
       ) {
         toDisplayChangedNumber(event);
-        value1 = "" ? 0 + "." : value1 + ".";
+        value1 = value1 === "" ? 0 + "." : value1 + ".";
         isDecimalClicked = true;
       } else if (
         isDecimalClicked === false &&
