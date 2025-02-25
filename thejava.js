@@ -46,7 +46,7 @@ function operate(operator, num1, num2) {
   return result;
 }
 
-function operateFunction(funcButton, value) {
+function toDisplayChangedNumber(funcButton, value) {
   const displayContainer = document.querySelector(".display-container");
 
   switch (funcButton.target.value) {
@@ -169,25 +169,25 @@ document.addEventListener("DOMContentLoaded", function () {
     funcButton.addEventListener("click", function (event) {
       isFuncButtonClicked = true;
       if (event.target.value === "C") {
-        operateFunction(event);
+        toDisplayChangedNumber(event);
         value1 = "";
         value2 = "";
       }
 
       if (event.target.value !== ".") {
-        operateFunction(event);
+        toDisplayChangedNumber(event);
       } else if (
         isDecimalClicked === false &&
         isOperatorButtonClicked === false
       ) {
-        operateFunction(event);
+        toDisplayChangedNumber(event);
         value1 = "" ? 0 + "." : value1 + ".";
         isDecimalClicked = true;
       } else if (
         isDecimalClicked === false &&
         isOperatorButtonClicked === true
       ) {
-        operateFunction(event);
+        toDisplayChangedNumber(event);
         value2 += ".";
         isDecimalClicked = true;
       }
