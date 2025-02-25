@@ -58,10 +58,13 @@
   padding: 10px 20px;
   background-color: coral;
   font-size: 40px;
+  margin: 0.5px;
+  padding: 20px;
 }
 
 .operatorButton {
-  padding: 30px;
+  padding: 20px;
+  margin: 0.5px;
   flex-grow: 1;
   flex-shrink: 1;
   background-color: aqua;
@@ -69,7 +72,7 @@
 }
 
 .numButton {
-  padding: 60px;
+  padding: 50px;
   flex-grow: 1;
   flex-shrink: 1;
   background-color: blanchedalmond;

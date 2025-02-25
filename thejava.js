@@ -14,6 +14,11 @@ function divide(num1, num2) {
   return num1 / num2;
 }
 
+function modulo(num1, num2) {
+  console.log(num1, num2, num1 % num2);
+  return num1 % num2;
+}
+
 function operate(operator, num1, num2) {
   let result = 0;
 
@@ -21,8 +26,8 @@ function operate(operator, num1, num2) {
     case "/":
       result = divide(num1, num2);
       break;
-    case "%":
-      result = add(num1, num2);
+    case "mod":
+      result = modulo(num1, num2);
       break;
     case "*":
       result = multiply(num1, num2);
@@ -92,14 +97,14 @@ function arrToDomButton(arr, styleName) {
 }
 
 function addOperatorButton() {
-  const arrOperator = ["/", "%", "*", "-", "+", "="];
+  const arrOperator = ["mod", "/", "*", "-", "+", "="];
   let arrButton = arrToDomButton(arrOperator, "operatorButton");
 
   return arrButton;
 }
 
 function addfuncButton() {
-  const arrFunc = ["C", "M-", "M+", "."];
+  const arrFunc = ["C", "M-", "M+", "%", "."];
   let arrButton = arrToDomButton(arrFunc, "functionButton");
 
   return arrButton;
