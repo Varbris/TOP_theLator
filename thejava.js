@@ -180,8 +180,6 @@ document.addEventListener("DOMContentLoaded", function () {
       } else if (event.target.value !== ".") {
         operateFunction(event);
       }
-
-      console.log(isDecimalClicked);
     });
   });
 
@@ -195,8 +193,6 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         value1 += event.target.value;
       }
-
-      console.log(value1, value2, result);
       result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
     });
   });
