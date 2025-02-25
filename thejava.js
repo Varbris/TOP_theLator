@@ -46,19 +46,21 @@ function operate(operator, num1, num2) {
   return result;
 }
 
-function operateFunction(funcButton) {
+function operateFunction(funcButton, value) {
   const displayContainer = document.querySelector(".display-container");
 
   switch (funcButton.target.value) {
     case "C":
       displayContainer.innerText = 0;
-
       break;
     case "M-":
       displayContainer.innerText = -Math.abs(displayContainer.innerText);
       break;
     case "M+":
       displayContainer.innerText = Math.abs(displayContainer.innerText);
+      break;
+    case "%":
+      displayContainer.innerText /= 100;
       break;
     case ".":
       displayContainer.innerText += ".";
@@ -171,9 +173,15 @@ document.addEventListener("DOMContentLoaded", function () {
         value1 = "";
         value2 = "";
       }
-      if (isDecimalClicked === false && isOperatorButtonClicked === false) {
+
+      if (event.target.value !== ".") {
         operateFunction(event);
-        value1 = value1 === "" ? 0 + "." : value1 + ".";
+      } else if (
+        isDecimalClicked === false &&
+        isOperatorButtonClicked === false
+      ) {
+        operateFunction(event);
+        value1 = "" ? 0 + "." : value1 + ".";
         isDecimalClicked = true;
       } else if (
         isDecimalClicked === false &&
@@ -182,9 +190,8 @@ document.addEventListener("DOMContentLoaded", function () {
         operateFunction(event);
         value2 += ".";
         isDecimalClicked = true;
-      } else if (event.target.value !== ".") {
-        operateFunction(event);
       }
+      console.log(value1, value2, result);
     });
   });
 
@@ -198,6 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         value1 += event.target.value;
       }
+      console.log(value1, value2, result);
       result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
     });
   });
