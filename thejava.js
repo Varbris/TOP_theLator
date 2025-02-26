@@ -63,8 +63,9 @@ function toChangeNumber(funcButton, value) {
       break;
     case "%":
       result = displayContainer.innerText / 100;
-      displayContainer.innerText /= 100;
-
+      displayContainer.innerText = (
+        displayContainer.innerText / 100
+      ).toPrecision(4);
       break;
     case ".":
       displayContainer.innerText += ".";
@@ -227,16 +228,21 @@ document.addEventListener("DOMContentLoaded", function () {
     operator.addEventListener("click", function (event) {
       operatorChar = event.target.value;
       isOperatorButtonClicked = true;
-      if (value2 === "") {
+      if (isOperatorButtonClicked && value1 == "" && value2 == "") {
+        console.log("awikwok");
+        displayContainer.innerText = 0;
+      } else if (value2 === "") {
         result = "";
         isDecimalClicked = false;
         displayContainer.innerText = result;
         return 0;
       }
+
       value1 = parseFloat(result);
       value2 = "";
 
       displayContainer.innerText = Math.round(result * 100) / 100;
+      console.log(value1, value2, result);
     });
   });
 });
