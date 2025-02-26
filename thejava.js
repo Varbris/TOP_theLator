@@ -3,6 +3,9 @@ function add(num1, num2) {
 }
 
 function subtract(num1, num2) {
+  console.log("bilangan: ", num1, num2);
+  console.log("pengurangan: " + (num1 - num2));
+
   return num1 - num2;
 }
 
@@ -48,27 +51,34 @@ function operate(operator, num1, num2) {
 
 function toDisplayChangedNumber(funcButton, value) {
   const displayContainer = document.querySelector(".display-container");
-
+  let result = "";
   switch (funcButton.target.value) {
     case "C":
       displayContainer.innerText = 0;
+      result = 0;
       break;
     case "M-":
       displayContainer.innerText = -Math.abs(displayContainer.innerText);
+      result = -Math.abs(displayContainer.innerText);
       break;
     case "M+":
       displayContainer.innerText = Math.abs(displayContainer.innerText);
+      result = Math.abs(displayContainer.innerText);
       break;
     case "%":
+      result = displayContainer.innerText / 100;
       displayContainer.innerText /= 100;
+
       break;
     case ".":
       displayContainer.innerText += ".";
+      result = displayContainer.innerText + ".";
       break;
 
     default:
       break;
   }
+  return result;
 }
 
 function addNumberButton() {
@@ -172,10 +182,17 @@ document.addEventListener("DOMContentLoaded", function () {
         toDisplayChangedNumber(event);
         value1 = "";
         value2 = "";
+        isDecimalClicked = false;
+        isOperatorButtonClicked = false;
       }
 
-      if (event.target.value !== ".") {
-        toDisplayChangedNumber(event);
+      if (event.target.value !== "." && isOperatorButtonClicked === false) {
+        value1 = toDisplayChangedNumber(event);
+      } else if (
+        event.target.value !== "." &&
+        isOperatorButtonClicked === true
+      ) {
+        value2 = toDisplayChangedNumber(event);
       } else if (
         isDecimalClicked === false &&
         isOperatorButtonClicked === false
@@ -191,7 +208,9 @@ document.addEventListener("DOMContentLoaded", function () {
         value2 += ".";
         isDecimalClicked = true;
       }
-      console.log(value1, value2, result);
+      result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
+      console.log("awikwok1 : ", value1, value2, result);
+      console.log("awikwok: ", result);
     });
   });
 
@@ -205,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         value1 += event.target.value;
       }
-      console.log(value1, value2, result);
+      console.log(value1, value2);
       result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
     });
   });
@@ -224,6 +243,7 @@ document.addEventListener("DOMContentLoaded", function () {
       value2 = "";
 
       displayContainer.innerText = Math.round(result * 100) / 100;
+      console.log("hasil " + result);
     });
   });
 });
