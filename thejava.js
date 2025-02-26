@@ -179,6 +179,7 @@ document.addEventListener("DOMContentLoaded", function () {
         toChangeNumber(event);
         value1 = "";
         value2 = "";
+        result = "";
         isDecimalClicked = false;
         isOperatorButtonClicked = false;
       }
@@ -228,8 +229,13 @@ document.addEventListener("DOMContentLoaded", function () {
     operator.addEventListener("click", function (event) {
       operatorChar = event.target.value;
       isOperatorButtonClicked = true;
-      if (isOperatorButtonClicked && value1 == "" && value2 == "") {
-        console.log("awikwok");
+      if (
+        (isOperatorButtonClicked && value1 == "" && value2 == "") ||
+        isNaN(value1) === true
+      ) {
+        value1 = 0;
+        value2 = "";
+        result = 0;
         displayContainer.innerText = 0;
       } else if (value2 === "") {
         result = "";
@@ -242,7 +248,6 @@ document.addEventListener("DOMContentLoaded", function () {
       value2 = "";
 
       displayContainer.innerText = Math.round(result * 100) / 100;
-      console.log(value1, value2, result);
     });
   });
 });
