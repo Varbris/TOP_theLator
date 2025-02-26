@@ -85,7 +85,6 @@ function addNumberButton() {
       return index;
     })
     .reverse();
-
   const arrButton = arrToDomButton(arrNumberButton, "numButton");
 
   return arrButton;
@@ -142,15 +141,20 @@ function generateCalculator() {
 function toDisplayNumber(event) {
   const maxInteger = Number.MAX_SAFE_INTEGER / 100000000;
   const displayContainer = document.querySelector(".display-container");
-
+  let result = "";
   if (displayContainer.innerText === "0") {
     displayContainer.innerText =
       parseFloat(displayContainer.innerText) + parseFloat(event.target.value);
+    result = displayContainer.innerText;
   } else if (displayContainer.innerText === "") {
     displayContainer.innerText += event.target.value;
+    result += event.target.value;
   } else if (parseFloat(displayContainer.innerText) < maxInteger) {
     displayContainer.innerText += event.target.value;
+    result += event.target.value;
   }
+
+  return result;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -215,7 +219,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   arrNumberButton.forEach(function (number) {
     number.addEventListener("click", function (event) {
-      toDisplayNumber(event);
       if (isEqualSignClicked === true) {
         result = "";
         value1 = "";
@@ -226,14 +229,15 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       if (isOperatorButtonClicked) {
-        value2 += event.target.value;
+        value2 += toDisplayNumber(event);
         displayContainer.innerText = value2;
       } else {
-        value1 += event.target.value;
+        value1 += toDisplayNumber(event);
         displayContainer.innerText = value1;
       }
 
       result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
+      console.log(value1, value2, result);
     });
   });
 
