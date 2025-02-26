@@ -112,7 +112,7 @@ function addOperatorButton() {
 }
 
 function addfuncButton() {
-  const arrFunc = ["C", "M-", "M+", "%", "."];
+  const arrFunc = ["<-", "M-", "M+", "%", "."];
   let arrButton = arrToDomButton(arrFunc, "functionButton");
 
   return arrButton;
@@ -176,20 +176,22 @@ document.addEventListener("DOMContentLoaded", function () {
   const arrNumberButton = numberContainer.querySelectorAll("button");
   const arrOperatorButton = operatorContainer.querySelectorAll("button");
   const arrfunctionButton = functionContainer.querySelectorAll("button");
+  const clearButton = document.querySelector(".clearButton");
+
+  clearButton.addEventListener("click", function (event) {
+    toChangeNumber(event);
+    isOperatorButtonClicked = false;
+    isDecimalClicked = false;
+    isEqualSignClicked = false;
+    operatorChar = null;
+    value1 = "";
+    value2 = "";
+    result = "";
+  });
 
   arrfunctionButton.forEach(function (funcButton) {
     funcButton.addEventListener("click", function (event) {
       isFuncButtonClicked = true;
-      if (event.target.value === "C") {
-        toChangeNumber(event);
-        isOperatorButtonClicked = false;
-        isDecimalClicked = false;
-        isEqualSignClicked = false;
-        operatorChar = null;
-        value1 = "";
-        value2 = "";
-        result = "";
-      }
 
       if (event.target.value !== "." && isOperatorButtonClicked === false) {
         value1 = toChangeNumber(event);
