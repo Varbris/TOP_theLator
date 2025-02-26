@@ -3,9 +3,6 @@ function add(num1, num2) {
 }
 
 function subtract(num1, num2) {
-  console.log("bilangan: ", num1, num2);
-  console.log("pengurangan: " + (num1 - num2));
-
   return num1 - num2;
 }
 
@@ -18,7 +15,6 @@ function divide(num1, num2) {
 }
 
 function modulo(num1, num2) {
-  console.log(num1, num2, num1 % num2);
   return num1 % num2;
 }
 
@@ -49,7 +45,7 @@ function operate(operator, num1, num2) {
   return result;
 }
 
-function toDisplayChangedNumber(funcButton, value) {
+function toChangeNumber(funcButton, value) {
   const displayContainer = document.querySelector(".display-container");
   let result = "";
   switch (funcButton.target.value) {
@@ -179,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
     funcButton.addEventListener("click", function (event) {
       isFuncButtonClicked = true;
       if (event.target.value === "C") {
-        toDisplayChangedNumber(event);
+        toChangeNumber(event);
         value1 = "";
         value2 = "";
         isDecimalClicked = false;
@@ -187,30 +183,28 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       if (event.target.value !== "." && isOperatorButtonClicked === false) {
-        value1 = toDisplayChangedNumber(event);
+        value1 = toChangeNumber(event);
       } else if (
         event.target.value !== "." &&
         isOperatorButtonClicked === true
       ) {
-        value2 = toDisplayChangedNumber(event);
+        value2 = toChangeNumber(event);
       } else if (
         isDecimalClicked === false &&
         isOperatorButtonClicked === false
       ) {
-        toDisplayChangedNumber(event);
+        toChangeNumber(event);
         value1 = value1 === "" ? 0 + "." : value1 + ".";
         isDecimalClicked = true;
       } else if (
         isDecimalClicked === false &&
         isOperatorButtonClicked === true
       ) {
-        toDisplayChangedNumber(event);
+        toChangeNumber(event);
         value2 += ".";
         isDecimalClicked = true;
       }
       result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
-      console.log("awikwok1 : ", value1, value2, result);
-      console.log("awikwok: ", result);
     });
   });
 
@@ -224,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         value1 += event.target.value;
       }
-      console.log(value1, value2);
+
       result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
     });
   });
@@ -243,7 +237,6 @@ document.addEventListener("DOMContentLoaded", function () {
       value2 = "";
 
       displayContainer.innerText = Math.round(result * 100) / 100;
-      console.log("hasil " + result);
     });
   });
 });
