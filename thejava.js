@@ -157,6 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
   generateCalculator();
   let isOperatorButtonClicked = false;
   let isDecimalClicked = false;
+  let isEqualSignClicked = false;
   let operatorChar = null;
   let value1 = "";
   let value2 = "";
@@ -213,12 +214,21 @@ document.addEventListener("DOMContentLoaded", function () {
   arrNumberButton.forEach(function (number) {
     number.addEventListener("click", function (event) {
       toDisplayNumber(event);
+      if (isEqualSignClicked === true) {
+        result = "";
+        value1 = "";
+        value2 = "";
+        isEqualSignClicked = false;
+        isOperatorButtonClicked = false;
+        displayContainer.innerText = "";
+      }
 
       if (isOperatorButtonClicked) {
         value2 += event.target.value;
         displayContainer.innerText = value2;
       } else {
         value1 += event.target.value;
+        displayContainer.innerText = value1;
       }
 
       result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
@@ -229,6 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
     operator.addEventListener("click", function (event) {
       operatorChar = event.target.value;
       isOperatorButtonClicked = true;
+
       if (
         (isOperatorButtonClicked && value1 == "" && value2 == "") ||
         isNaN(value1) === true
@@ -248,6 +259,9 @@ document.addEventListener("DOMContentLoaded", function () {
       value2 = "";
 
       displayContainer.innerText = Math.round(result * 100) / 100;
+      if (event.target.value === "=") {
+        isEqualSignClicked = true;
+      }
     });
   });
 });
