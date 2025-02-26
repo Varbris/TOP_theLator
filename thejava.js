@@ -178,11 +178,13 @@ document.addEventListener("DOMContentLoaded", function () {
       isFuncButtonClicked = true;
       if (event.target.value === "C") {
         toChangeNumber(event);
+        isOperatorButtonClicked = false;
+        isDecimalClicked = false;
+        isEqualSignClicked = false;
+        operatorChar = null;
         value1 = "";
         value2 = "";
         result = "";
-        isDecimalClicked = false;
-        isOperatorButtonClicked = false;
       }
 
       if (event.target.value !== "." && isOperatorButtonClicked === false) {
