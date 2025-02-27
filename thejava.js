@@ -166,6 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let value1 = "";
   let value2 = "";
   let result = 0;
+  const MAX_INTEGER = Number.MAX_SAFE_INTEGER / 100000000;
 
   const numberContainer = document.querySelector(".number-container");
   const operatorContainer = document.querySelector(".operator-container");
@@ -179,15 +180,33 @@ document.addEventListener("DOMContentLoaded", function () {
   const clearButton = document.querySelector(".clearButton");
   const deleteButton = document.querySelector(".deleteButton");
 
+  document.addEventListener("keydown", function (event) {
+    if (event.key > 0 && event.key <= 9) {
+      if (isOperatorButtonClicked) {
+        value2 += event.key;
+        if (value2 < MAX_INTEGER) {
+          value2 = parseFloat(value2);
+          displayContainer.innerText = value2;
+        }
+      } else {
+        value1 += event.key;
+        if (value1 < MAX_INTEGER) {
+          value1 = parseFloat(value1);
+          displayContainer.innerText = value1;
+        }
+      }
+    }
+    result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
+  });
+
   deleteButton.addEventListener("click", function (event) {
     let currDisplayValue = displayContainer.innerText.slice(0, -1);
     if (value1 !== "") {
-      value2 = currDisplayValue < 1 ? 0 : currDisplayValue;
+      value2 = currDisplayValue;
       displayContainer.innerText = value2;
     } else {
-      value1 = currDisplayValue < 1 ? 0 : currDisplayValue;
+      value1 = currDisplayValue;
       displayContainer.innerText = value1;
-      console.log(typeof value1, value1);
     }
   });
   clearButton.addEventListener("click", function (event) {
@@ -252,9 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
         displayContainer.innerText = value1;
         result += value1;
       }
-
       result = operate(operatorChar, value1, value2);
-      console.log(value1, value2, result);
     });
   });
 
@@ -277,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
         displayContainer.innerText = result;
         return 0;
       }
-
+      console.log(value1, value2, result);
       value1 = parseFloat(result);
       value2 = "";
 
