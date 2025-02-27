@@ -112,7 +112,7 @@ function addOperatorButton() {
 }
 
 function addfuncButton() {
-  const arrFunc = ["<-", "M-", "M+", "%", "."];
+  const arrFunc = ["M-", "M+", "%", "."];
   let arrButton = arrToDomButton(arrFunc, "functionButton");
 
   return arrButton;
@@ -165,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
   let operatorChar = null;
   let value1 = "";
   let value2 = "";
-  let result = "";
+  let result = 0;
 
   const numberContainer = document.querySelector(".number-container");
   const operatorContainer = document.querySelector(".operator-container");
@@ -177,7 +177,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const arrOperatorButton = operatorContainer.querySelectorAll("button");
   const arrfunctionButton = functionContainer.querySelectorAll("button");
   const clearButton = document.querySelector(".clearButton");
+  const deleteButton = document.querySelector(".deleteButton");
 
+  deleteButton.addEventListener("click", function (event) {
+    let currDisplayValue = displayContainer.innerText.slice(0, -1);
+    if (value1 !== "") {
+      value2 = currDisplayValue < 1 ? 0 : currDisplayValue;
+      displayContainer.innerText = value2;
+    } else {
+      value1 = currDisplayValue < 1 ? 0 : currDisplayValue;
+      displayContainer.innerText = value1;
+      console.log(typeof value1, value1);
+    }
+  });
   clearButton.addEventListener("click", function (event) {
     toChangeNumber(event);
     isOperatorButtonClicked = false;
@@ -186,13 +198,12 @@ document.addEventListener("DOMContentLoaded", function () {
     operatorChar = null;
     value1 = "";
     value2 = "";
-    result = "";
+    result = 0;
   });
 
   arrfunctionButton.forEach(function (funcButton) {
     funcButton.addEventListener("click", function (event) {
       isFuncButtonClicked = true;
-
       if (event.target.value !== "." && isOperatorButtonClicked === false) {
         value1 = toChangeNumber(event);
       } else if (
@@ -215,6 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
         value2 += ".";
         isDecimalClicked = true;
       }
+
       result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
     });
   });
@@ -222,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
   arrNumberButton.forEach(function (number) {
     number.addEventListener("click", function (event) {
       if (isEqualSignClicked === true) {
-        result = "";
+        result = 0;
         value1 = "";
         value2 = "";
         isEqualSignClicked = false;
@@ -232,13 +244,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
       if (isOperatorButtonClicked) {
         value2 += toDisplayNumber(event);
+        value2 = parseFloat(value2);
         displayContainer.innerText = value2;
       } else {
         value1 += toDisplayNumber(event);
+        value1 = parseFloat(value1);
         displayContainer.innerText = value1;
+        result += value1;
       }
 
-      result = operate(operatorChar, parseFloat(value1), parseFloat(value2));
+      result = operate(operatorChar, value1, value2);
       console.log(value1, value2, result);
     });
   });
@@ -252,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
         (isOperatorButtonClicked && value1 == "" && value2 == "") ||
         isNaN(value1) === true
       ) {
-        value1 = 0;
+        value1 = "";
         value2 = "";
         result = 0;
         displayContainer.innerText = 0;

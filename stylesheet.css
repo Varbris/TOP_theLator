@@ -50,10 +50,16 @@
   flex-direction: column;
   margin: 0 10px;
 }
+
+.clearButtonContainer {
+  margin: 0 auto;
+}
+
 .clearButton {
   width: 650px;
   padding: 50px 1px;
   margin: 5px 10px 10px;
+  background-color: #fffed3;
 }
 
 .function-container {
