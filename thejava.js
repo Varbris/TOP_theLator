@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", function () {
         displayContainer.innerText = result;
         return 0;
       }
-      console.log(value1, value2, result);
+
       value1 = parseFloat(result);
       value2 = "";
 
