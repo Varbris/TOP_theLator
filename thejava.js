@@ -202,7 +202,11 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   deleteButton.addEventListener("click", function (event) {
-    let currDisplayValue = displayContainer.innerText.slice(0, -1);
+    let currDisplayValue =
+      isNaN(parseFloat(displayContainer.innerText.slice(0, -1))) === true
+        ? 0
+        : parseFloat(displayContainer.innerText.slice(0, -1));
+    console.log(currDisplayValue);
     if (value1 !== "" && isOperatorButtonClicked === true) {
       value2 = parseFloat(currDisplayValue);
       displayContainer.innerText = parseFloat(currDisplayValue);
