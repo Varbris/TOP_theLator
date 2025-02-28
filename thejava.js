@@ -176,7 +176,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const arrNumberButton = numberContainer.querySelectorAll("button");
   const arrOperatorButton = operatorContainer.querySelectorAll("button");
-  const arrfunctionButton = functionContainer.querySelectorAll("button");
+  const arrfunctionButton = functionContainer.querySelectorAll(
+    "button:not(:first-child)"
+  );
   const clearButton = document.querySelector(".clearButton");
   const deleteButton = document.querySelector(".deleteButton");
 
@@ -201,13 +203,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
   deleteButton.addEventListener("click", function (event) {
     let currDisplayValue = displayContainer.innerText.slice(0, -1);
-    if (value1 !== "") {
-      value2 = currDisplayValue;
-      displayContainer.innerText = value2;
+    if (value1 !== "" && isOperatorButtonClicked === true) {
+      value2 = parseFloat(currDisplayValue);
+      displayContainer.innerText = parseFloat(currDisplayValue);
     } else {
-      value1 = currDisplayValue;
-      displayContainer.innerText = value1;
+      value1 = parseFloat(currDisplayValue);
+      displayContainer.innerText = parseFloat(currDisplayValue);
     }
+    result = operate(operatorChar, value1, value2);
   });
   clearButton.addEventListener("click", function (event) {
     toChangeNumber(event);
@@ -294,7 +297,6 @@ document.addEventListener("DOMContentLoaded", function () {
         displayContainer.innerText = result;
         return 0;
       }
-
       value1 = parseFloat(result);
       value2 = "";
 
